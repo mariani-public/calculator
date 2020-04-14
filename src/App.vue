@@ -1,22 +1,16 @@
 <template>
   <div id="app">
-    <h1>{{ msg }}</h1>
+    <calculator />
   </div>
 </template>
 
 <script>
+import Calculator from './components/Calculator.vue';
+
 export default {
   name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App!'
-    }
-  }
+  components: {
+    Calculator
+  },
 }
 </script>
-
-<style lang="css">
-  #app {
-    color: #56b983;
-  }
-</style>
