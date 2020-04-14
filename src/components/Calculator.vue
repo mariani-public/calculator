@@ -1,18 +1,20 @@
 <template>
     <div class="calculator">
-      <div class="display">
-        {{ display }}
-      </div>
-      <div class="button-grid">
-        <operation-input v-for="n in numbers" :operation="n" @clicked="addNumberToStack" />
-      </div>
-      <div>
-        <operation-input v-for="op in allOperations" :operation="op" @clicked="addOperationToStack" />
+      <div class="body">
+        <div class="display">
+          {{ display }}
+        </div>
+        <div class="number-grid">
+          <operation-input v-for="n in numbers" :operation="n" @clicked="addNumberToStack" />
+        </div>
+        <div class="operation-grid">
+          <operation-input v-for="op in allOperations" :operation="op" @clicked="addOperationToStack" />
+        </div>
       </div>
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import OperationInput from './OperationInput';
 
 export default {
@@ -22,7 +24,7 @@ export default {
   },
   data() {
     return {
-      numbers: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+      numbers: ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', ],
       mathOperations: ['+', '-', '*', '/'],
       specialOperations: ['=', 'C', 'AC'],
       numberStack: [],
@@ -80,16 +82,16 @@ export default {
 
           if (opIndex !== -1 ) {
             if (result[opIndex] === '*') {
-              mathOp = parseInt(result[opIndex - 1]) * parseInt(result[opIndex + 1]));
+              mathOp = parseInt(result[opIndex - 1]) * parseInt(result[opIndex + 1]);
             } else {
-              mathOp = parseInt(result[opIndex - 1]) / parseInt(result[opIndex + 1]));
+              mathOp = parseInt(result[opIndex - 1]) / parseInt(result[opIndex + 1]);
             }
           } else {
             opIndex = result.findIndex(op => isNaN(op));
             if(result[opIndex] === '+') {
-              mathOp = parseInt(result[opIndex - 1]) + parseInt(result[opIndex + 1]));
+              mathOp = parseInt(result[opIndex - 1]) + parseInt(result[opIndex + 1]);
             } else {
-              mathOp = parseInt(result[opIndex - 1]) - parseInt(result[opIndex + 1]));
+              mathOp = parseInt(result[opIndex - 1]) - parseInt(result[opIndex + 1]);
             }
           }
 
@@ -107,23 +109,48 @@ export default {
 
 <style scoped>
 .calculator {
+    /* overall display */
     margin: 0 auto;
-    height: 500px;
-    width: 400px;
-    background-color: red;
+    background-color: rgb(0, 0, 0, 0.8);
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+
+    /* possibly remove dimensions */
+    height: 300px;
+    width: 350px;
 }
 
-.button-grid {
+.body {
+  /* layout of contents */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.number-grid {
   display: grid;
-  grid-template-columns: repeat(4, 25% [col-end]);
+  grid-template-columns: repeat(3, 98px);
+  grid-template-rows: repeat(4, 45px);
+  grid-gap: 3px;
+}
+
+.operation-grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 300px;
+  margin-bottom: 10px;
 }
 
 .display {
   width: 300px;
-  margin: 0 auto;
-  height: 25px;
-  background-color: darkgray;
-  color: blue;
+  background-color: darkolivegreen;
+  padding: 3px 3px 3px 0px;
+  color: black;
   text-align: right;
+  margin: 10px auto 0px auto;
+  border-radius: 3px;
 }
 </style>
